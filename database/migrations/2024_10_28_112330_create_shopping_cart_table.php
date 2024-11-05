@@ -1,31 +1,23 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateShoppingCartsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::create('shopping_cart', function (Blueprint $table) {
+        Schema::create('shopping_carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->timestamp('added_at')->useCurrent();
-            $table->string('product_ids'); // Comma-separated string of product IDs
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // This adds the user_id column
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->integer('amount');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('shopping_cart');
+        Schema::dropIfExists('shopping_carts');
     }
-};
-    
+}
